@@ -1,62 +1,46 @@
 package com.example.myapplication
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        // getting the recyclerview by its id
-        val recyclerview = findViewById<RecyclerView>(R.id.recyclerview)
 
-        // this creates a vertical layout Manager
-        recyclerview.layoutManager = LinearLayoutManager(this)
+        val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+
         val monthList = generateMonthsList()
-
-        // ArrayList of class ItemsViewModel
-//        val data = ArrayList<ItemsViewModel>()
-
-        // This loop will create 20 Views containing
-        // the image with the count of view
-//        for (i in 1..40) {
-//            data.add(ItemsViewModel(R.drawable.ic_baseline_folder_24, "Itemhola " + i))
-//        }
-
-        // This will pass the ArrayList to our Adapter
-        val adapter = MonthAdapter(monthList)
-
-        // Setting the Adapter with the recyclerview
-        recyclerview.adapter = adapter
-
+        recyclerView.adapter = MonthAdapter(monthList)
     }
 
-    private fun generateMonthsList(): ArrayList<MonthModel> {
+    private fun generateMonthsList(): List<MonthModel> {
         val monthList = ArrayList<MonthModel>()
-        val monthFormatter = DateTimeFormatter.ofPattern("MMM yyyy") // Format: "Mar 2025"
+        val monthFormatter = DateTimeFormatter.ofPattern("MMM yyyy")
+        val currentDate = LocalDate.now()
+        val endDate = LocalDate.of(2025, 12, 31)
 
-        var currentDate = LocalDate.now() // Start from today
-        val endDate = LocalDate.of(2025, 12, 31) // Until Dec 2025
+        var date = currentDate
+        while (!date.isAfter(endDate)) {
+            val days = mutableListOf<String>()
+            val dayHeaders = listOf("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
 
-        while (!currentDate.isAfter(endDate)) {
-            val monthName = currentDate.format(monthFormatter) // Convert to "Mar 2025"
-            val days = ArrayList<String>()
+            val firstDayOfWeek = date.withDayOfMonth(1).dayOfWeek.value % 7
+            repeat(firstDayOfWeek) { days.add("") }
 
-            val daysInMonth = currentDate.lengthOfMonth() // Get number of days in the month
-            for (day in 1..daysInMonth) {
-                days.add(day.toString()) // Store day as string
+            val daysInMonth = date.lengthOfMonth()
+            for (i in 1..daysInMonth) {
+                days.add(i.toString())
             }
 
-            // ✅ Now store as `MonthModel`
-            monthList.add(MonthModel(monthName, days))
-
-            // Move to the next month
-            currentDate = currentDate.plusMonths(1)
+            monthList.add(MonthModel(date.format(monthFormatter), dayHeaders, days))
+            date = date.plusMonths(1)
         }
 
         return monthList

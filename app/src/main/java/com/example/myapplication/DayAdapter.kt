@@ -6,23 +6,29 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class DayAdapter(private val daysList: List<String>) :
+class DayAdapter(private val days: List<String>) :
     RecyclerView.Adapter<DayAdapter.DayViewHolder>() {
 
     class DayViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val dayTextView: TextView = view.findViewById(R.id.textViewDay)
+        val textViewDay: TextView = view.findViewById(R.id.textViewDay)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DayViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_day, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_day, parent, false)
         return DayViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: DayViewHolder, position: Int) {
-        holder.dayTextView.text = daysList[position]
+        val day = days[position]
+        holder.textViewDay.text = day
 
+        // Hide empty placeholders (for alignment)
+        if (day.isEmpty()) {
+            holder.textViewDay.visibility = View.INVISIBLE
+        } else {
+            holder.textViewDay.visibility = View.VISIBLE
+        }
     }
 
-    override fun getItemCount(): Int = daysList.size
+    override fun getItemCount(): Int = days.size
 }

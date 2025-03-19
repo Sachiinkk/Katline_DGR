@@ -1,27 +1,29 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="8dp">
 
-    <!-- Month Header -->
     <TextView
         android:id="@+id/textViewMonth"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/holo_blue_light"
-        android:gravity="center"
-        android:padding="10dp"
-        android:text="Month Name"
-        android:textColor="@android:color/white"
+        android:background="#29ABE2"
+        android:textColor="#FFFFFF"
         android:textSize="20sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:gravity="center"
+        android:padding="10dp"/>
 
-    <!-- Days RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewDayHeaders"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="horizontal"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewDays"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"/>
+        android:scrollbars="vertical"/>
 </LinearLayout>
