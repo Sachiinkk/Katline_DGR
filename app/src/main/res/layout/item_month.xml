@@ -19,11 +19,13 @@
         android:id="@+id/recyclerViewDayHeaders"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scrollbars="horizontal"/>
+        android:nestedScrollingEnabled="false"
+        android:scrollbars="none"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewDays"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scrollbars="vertical"/>
+        android:nestedScrollingEnabled="false"
+        android:scrollbars="none"/>
 </LinearLayout>
